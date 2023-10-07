@@ -3,6 +3,7 @@ import { initTRPC } from '@trpc/server';
 import { z } from 'zod'
 import delay from 'delay';
 import type { Lesson } from '$lib/types';
+import { parse } from '@mliebelt/pgn-parser'
 
 export const t = initTRPC.context<Context>().create();
 
@@ -33,16 +34,21 @@ export const router = t.router({
   validateMove: t.procedure
     .input(z.object({
       boardState: z.string(),
-      moveNumber: z.number(),
       lessonId: z.string()
     }))
     .query(async (opts) => {
-      const { input: { boardState, moveNumber, lessonId } } = opts
+      const { input: { boardState, lessonId } } = opts
+      console.log({ boardState, lessonId })
 
-      const lesson: Lesson = await fetch(`http://localhost:3000/api/lessons/${lessonId}`)
+      const lesson: Lesson = await fetch(`http://localhost:3000/lessons/${lessonId}`)
         .then(res => res.json())
 
-      const validPgnBoardState = lesson.boardStates[moveNumber - 1]
+
+      const parseResult = parse(boardState, { startRule: "pgn" }) as unknown as { moves: string[]}
+      const lastMoveNumber = parseResult.moves.length
+
+      const validPgnBoardState = lesson.boardStates[lastMoveNumber - 1]
+      console.log({ lesson })
       const correctMove = validPgnBoardState.correct === boardState
       if (correctMove) return true
 

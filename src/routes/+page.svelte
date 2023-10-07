@@ -5,6 +5,7 @@
 
   let lessons: Lesson[] = []
   let currentLesson: Lesson | null = null;
+  let currentBoardPGN = '';
   let loading = false;
   let lessonId = '';
 
@@ -12,7 +13,6 @@
     loading = true;
     lessons = await trpc($page).lessonList.query();
     loading = false;
-    console.log({ lessons })
   };
 
   const loadLesson = async () => {
@@ -23,7 +23,14 @@
     }
     currentLesson = lesson;
     loading = false;
-    console.log({ currentLesson })
+  };
+
+  const validateMove = async () => {
+    loading = true;
+    console.log({ lessonId, boardState: currentBoardPGN })
+    const result = await trpc($page).validateMove.query({ lessonId, boardState: currentBoardPGN });
+    console.log(result);
+    loading = false;
   };
 </script>
 
@@ -37,7 +44,7 @@
   </ul>
 {/if}
 
-------------------------------------------------------------
+<p>------------------------------------------------------------</p>
 
 <p>Load lesson by ID</p>
 <input type="text" bind:value={lessonId} />
@@ -60,4 +67,11 @@
         {/each}
     </ul>
 {/if}
+
+<p>------------------------------------------------------------</p>
+
+<p>Validate Lesson</p>
+<input type="text" bind:value={currentBoardPGN}/>
+<button on:click={validateMove}>Validate move</button>
+<p>{currentBoardPGN}</p>
 
