@@ -19,34 +19,37 @@ export const router = t.router({
     return lessons
   }),
   lessonById: t.procedure
-    .input(z.string())
+    .input(z.string().uuid())
     .query(async (opts) => {
       const { input: lessonId } = opts
 
       const lesson: Lesson = await fetch(`http://localhost:3000/lessons/${lessonId}`)
         .then(res => res.json())
 
+      if (!lesson) throw new Error('Lesson not found')
+
       return lesson
   }),
   validateMove: t.procedure
     .input(z.object({
-      boardStates: z.array(z.object({
-        pgn: z.string()
-      })),
+      boardState: z.string(),
       moveNumber: z.number(),
       lessonId: z.string()
     }))
     .query(async (opts) => {
-      const { input: { boardStates, moveNumber, lessonId } } = opts
-      const [ lastBoardState ] = boardStates.slice(-1)
+      const { input: { boardState, moveNumber, lessonId } } = opts
 
       const lesson: Lesson = await fetch(`http://localhost:3000/api/lessons/${lessonId}`)
         .then(res => res.json())
 
       const validPgnBoardState = lesson.boardStates[moveNumber - 1]
-      const validMove = validPgnBoardState.pgn === lastBoardState.pgn
+      const correctMove = validPgnBoardState.correct === boardState
+      if (correctMove) return true
 
-      return validMove
+      const matchingAlternative = validPgnBoardState.alternatives?.find(alternative => alternative.pgn === boardState)
+      if (matchingAlternative) return matchingAlternative.annotation
+
+      return false
     })
   ,
 

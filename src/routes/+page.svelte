@@ -17,13 +17,15 @@
 
   const loadLesson = async () => {
     loading = true;
-    currentLesson = await trpc($page).lessonById.query(lessonId);
+    const lesson = await trpc($page).lessonById.query(lessonId);
+    if (!lesson.id) {
+      return alert(`Lesson ${lessonId} not found`);
+    }
+    currentLesson = lesson;
     loading = false;
     console.log({ currentLesson })
   };
 </script>
-
-<h6>Loading data in<br /><code>+page.svelte</code></h6>
 
 <button on:click={loadLessons}>Load lesson list</button>
 <p>Lesson List:</p>
@@ -35,6 +37,8 @@
   </ul>
 {/if}
 
+------------------------------------------------------------
+
 <p>Load lesson by ID</p>
 <input type="text" bind:value={lessonId} />
 
@@ -43,8 +47,17 @@
     
 {#if currentLesson}
     <h3>{currentLesson.title}</h3>
-    {#each currentLesson.boardStates as boardState}
-      <p>{boardState.pgn}</p>
-    {/each}
+    <ul>
+        {#each currentLesson.boardStates as boardState}
+            <li>{boardState.correct}</li>
+            {#if boardState.alternatives}
+                <ul>
+                    {#each boardState.alternatives as alternative}
+                        <li>{JSON.stringify(alternative)}</li>
+                    {/each}
+                </ul>
+            {/if}
+        {/each}
+    </ul>
 {/if}
 

@@ -1,7 +1,13 @@
 export type Lesson = {
     boardStates: {
-      pgn: string
+      correct: string,
+      alternatives?: AlternativeState[]
     }[],
     id: string,
     title: string
-  }
+}
+
+type AlternativeState = {
+    pgn: string
+    annotation: string
+}

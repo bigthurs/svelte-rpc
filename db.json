@@ -1,19 +1,23 @@
 {
   "lessons": [
       {
-          "id": 1,
+          "id": "143e1c74-6563-11ee-8c99-0242ac120002",
           "title": "Lesson 1",
           "boardStates": [
-              { "pgn": "1. e4 " },
-              { "pgn": "1. e4 e5" }
-          ]
-      },
-      {
-          "id": 2,
-          "title": "Lesson 2",
-          "boardStates": [
-              { "pgn": "1. e4 e5" },
-              { "pgn": "1. e4 e5 2. Nf3" }
+              { "correct": "1. e4 " },
+              { 
+                "correct": "1. e4 e5",
+                "alternatives": [
+                  {
+                    "pgn": "1. e4 d5",
+                    "annotation": "This is the Scandinavian Defense."
+                  },
+                  {
+                    "pgn": "1. e4 c5",
+                    "annotation": "This is the Sicilian Defense."
+                  }
+                ]
+              }
           ]
       }
   ]
