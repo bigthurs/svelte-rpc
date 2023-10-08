@@ -48,7 +48,7 @@ export const router = t.router({
       const lastMoveNumber = parseResult.moves.length
 
       const validPgnBoardState = lesson.boardStates[lastMoveNumber - 1]
-      console.log({ lesson })
+      console.log({ lesson, validPgnBoardState, boardState })
       const correctMove = validPgnBoardState.correct === boardState
       if (correctMove) return true
 

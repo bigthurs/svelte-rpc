@@ -8,6 +8,8 @@
   let currentBoardPGN = '';
   let loading = false;
   let lessonId = '';
+  let validationResult: boolean | string = ''
+
 
   const loadLessons = async () => {
     loading = true;
@@ -30,6 +32,7 @@
     console.log({ lessonId, boardState: currentBoardPGN })
     const result = await trpc($page).validateMove.query({ lessonId, boardState: currentBoardPGN });
     console.log(result);
+    validationResult = result
     loading = false;
   };
 </script>
@@ -74,4 +77,14 @@
 <input type="text" bind:value={currentBoardPGN}/>
 <button on:click={validateMove}>Validate move</button>
 <p>{currentBoardPGN}</p>
+
+{#if validationResult !== ''}
+    {#if validationResult === true}
+        <p>Correct!</p>
+    {:else if validationResult === false}
+        <p>Incorrect!</p>
+    {:else}
+        <p>Incorrect! {validationResult}</p>
+    {/if}
+{/if}
 
