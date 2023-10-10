@@ -62,6 +62,7 @@ export const router = t.router({
   // Mutations
   createLesson: t.procedure
     .input(z.object({
+      title: z.string(),
       boardStates: z.array(z.object({
         pgn: z.string()
       }))
