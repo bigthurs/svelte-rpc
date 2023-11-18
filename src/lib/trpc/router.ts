@@ -16,6 +16,7 @@ export const router = t.router({
   lessonList: t.procedure.query(async () => {
     const lessons: Lesson[] = await fetch('http://localhost:3000/lessons')
       .then(res => res.json())
+    console.log({ lessons })
 
     return lessons
   }),
@@ -64,13 +65,17 @@ export const router = t.router({
     .input(z.object({
       title: z.string(),
       boardStates: z.array(z.object({
-        pgn: z.string()
+        correct: z.string(),
+        alternatives: z.array(z.object({
+          pgn: z.string(),
+          annotation: z.string()
+        }))
       }))
     }))
     .mutation(async (opts) => {
       const { input: lesson } = opts
 
-      const newLesson = await fetch('http://localhost:3000/api/lessons', {
+      const newLesson = await fetch('http://localhost:3000/lessons', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

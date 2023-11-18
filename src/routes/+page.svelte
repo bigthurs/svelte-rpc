@@ -14,6 +14,7 @@
   const loadLessons = async () => {
     loading = true;
     lessons = await trpc($page).lessonList.query();
+    console.log({ lessons })
     loading = false;
   };
 
@@ -48,7 +49,7 @@
 {/if}
 
 {#if currentLesson}
-<h3>{currentLesson.title}</h3>
+    <h3>{currentLesson.title}</h3>
         <ul>
             {#each currentLesson.boardStates as boardState}
                 <li>{boardState.correct}</li>
