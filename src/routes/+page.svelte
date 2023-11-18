@@ -20,9 +20,9 @@
   const loadLesson = async (event: any) => {
     lessonId = event.target.value
     const lesson = await trpc($page).lessonById.query(lessonId);
-    if (!lesson.id) {
+    if (!lesson.id) 
       return alert(`Lesson ${lessonId} not found`);
-    }
+    
     currentLesson = lesson;
     loading = false;
   }

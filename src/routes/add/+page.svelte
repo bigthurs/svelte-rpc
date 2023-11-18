@@ -38,22 +38,34 @@
 
     const addLesson = async () => {
         loading = true;
-        if (!lessonToAdd.title) return alert('Title is required')
-        if (!lessonToAdd.boardStates.length) return alert('At least 1 board state is required')
+        
+        if (!lessonToAdd.title) 
+            return alert('Title is required')
+
+        if (!lessonToAdd.boardStates.length) 
+            return alert('At least 1 board state is required')
+
         const lesson = await trpc($page).createLesson.mutate(lessonToAdd);
         console.log({ message: `Lesson ${lesson.title} created` })
         loading = false;
     };
 
     const addCorrectToDraft = () => {
-        if (!currentCorrectPgn) return alert('PGN is required')
+        if (!currentCorrectPgn) 
+            return alert('PGN is required')
+
         const parseResult = parse(currentCorrectPgn, { startRule: "pgn" }) as unknown as { moves: Record<string, any>[]}
-        if (!parseResult.moves || !parseResult.moves[0]?.moveNumber) return alert('Invalid PGN')
+
+        if (!parseResult.moves || !parseResult.moves[0]?.moveNumber) 
+            return alert('Invalid PGN')
+
         draftBoardState.correct = currentCorrectPgn;
     }
 
     const addAlternativeToDraft = () => {
-        if (!currentDraftAlternative.pgn || !currentDraftAlternative.annotation) return alert('PGN is required')
+        if (!currentDraftAlternative.pgn || !currentDraftAlternative.annotation) 
+            return alert('PGN is required')
+
         draftBoardState = {
             ...draftBoardState,
             alternatives: [ ...draftBoardState.alternatives, currentDraftAlternative ]
@@ -61,7 +73,9 @@
     }
 
     const addBoardState = () => {
-        if (!draftBoardState || !draftBoardState.correct || !draftBoardState.alternatives) return alert('Board state is required')
+        if (!draftBoardState || !draftBoardState.correct || !draftBoardState.alternatives) 
+            return alert('Board state is required')
+
         lessonToAdd.boardStates = [
                 ...lessonToAdd.boardStates,
                 draftBoardState
