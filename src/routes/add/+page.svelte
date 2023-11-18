@@ -1,6 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import { trpc } from '$lib/trpc/client';
+    import { parse } from '@mliebelt/pgn-parser'
 
     let loading = false;
     let currentCorrectPgn: string
@@ -37,7 +38,6 @@
 
     const addLesson = async () => {
         loading = true;
-        console.log({ lessonToAdd })
         if (!lessonToAdd.title) return alert('Title is required')
         if (!lessonToAdd.boardStates.length) return alert('At least 1 board state is required')
         const lesson = await trpc($page).createLesson.mutate(lessonToAdd);
@@ -47,6 +47,8 @@
 
     const addCorrectToDraft = () => {
         if (!currentCorrectPgn) return alert('PGN is required')
+        const parseResult = parse(currentCorrectPgn, { startRule: "pgn" }) as unknown as { moves: Record<string, any>[]}
+        if (!parseResult.moves || !parseResult.moves[0]?.moveNumber) return alert('Invalid PGN')
         draftBoardState.correct = currentCorrectPgn;
     }
 
@@ -56,7 +58,6 @@
             ...draftBoardState,
             alternatives: [ ...draftBoardState.alternatives, currentDraftAlternative ]
         }
-        console.log({ draftBoardState })
     }
 
     const addBoardState = () => {

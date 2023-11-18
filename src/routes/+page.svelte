@@ -14,7 +14,6 @@
   const loadLessons = async () => {
     loading = true;
     lessons = await trpc($page).lessonList.query();
-    console.log({ lessons })
     loading = false;
   };
 
