@@ -710,6 +710,11 @@ check-error@^1.0.3:
   dependencies:
     get-func-name "^2.0.2"
 
+chess.js@^1.0.0-beta.6:
+  version "1.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/chess.js/-/chess.js-1.0.0-beta.6.tgz#c8bd5d26890421472fba2bbb0819820accd084a9"
+  integrity sha512-sqBfX1VL3csSyqVM5ogbKA+aRlZyWDh276ruWXphwI0lDUMs7iYjZs29BOi49f7mXeunJE7cdfnIZhihsyLnsA==
+
 chokidar@^3.4.1:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
@@ -733,6 +738,11 @@ cliui@^8.0.1:
     string-width "^4.2.0"
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
+
+cm-chessboard@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/cm-chessboard/-/cm-chessboard-8.4.2.tgz#1c348c8973f6b9977bab1414b3b45a25093d9c9c"
+  integrity sha512-aIWWGGew8OxVZLkLS6O+iFY12Z53o6hCHtqCS62iDPQPwWs9IDhvWoNjQZdT3xpoIpfptZ7KRBIEjSIvw85Tdw==
 
 code-red@^1.0.3:
   version "1.0.4"

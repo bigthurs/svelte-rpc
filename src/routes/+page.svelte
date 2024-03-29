@@ -35,46 +35,68 @@
   };
 </script>
 
-{#if !currentLesson}
-    <button on:click={loadLessons}>Load lesson list</button>
-    <p>Lesson List:</p>
-    {#if lessons.length}
-    <ul>
-        {#each lessons as lesson (lesson.id)}
-            <button on:click={loadLesson} value={lesson.id}> {lesson.title} </button>
-        {/each}
-    </ul>
-    {/if}
-{/if}
-
-{#if currentLesson}
-    <h3>{currentLesson.title}</h3>
-        <ul>
-            {#each currentLesson.boardStates as boardState}
-                <li>{boardState.correct}</li>
-                {#if boardState.alternatives}
-                    <ul>
-                        {#each boardState.alternatives as alternative}
-                            <li>{JSON.stringify(alternative)}</li>
-                        {/each}
-                    </ul>
-                {/if}
-            {/each}
-        </ul>
-    <p>Validate Move</p>
-    <input type="text" bind:value={currentBoardPGN}/>
-    <button on:click={validateMove}>Validate move</button>
-    <p>{currentBoardPGN}</p>
-
-    {#if validationResult !== ''}
-        {#if validationResult === true}
-            <p>Correct!</p>
-        {:else if validationResult === false}
-            <p>Incorrect!</p>
-        {:else}
-            <p>Incorrect! {validationResult}</p>
+<div class="container">
+    <div class="left-div">
+        {#if !currentLesson}
+            <button on:click={loadLessons}>Load lesson list</button>
+            <p>Lesson List:</p>
+            {#if lessons.length}
+            <ul>
+                {#each lessons as lesson (lesson.id)}
+                    <button on:click={loadLesson} value={lesson.id}> {lesson.title} </button>
+                {/each}
+            </ul>
+            {/if}
         {/if}
-    {/if}
-{/if}
+        
+        {#if currentLesson}
+            <h3>{currentLesson.title}</h3>
+                <ul>
+                    {#each currentLesson.boardStates as boardState}
+                        <li>{boardState.correct}</li>
+                        {#if boardState.alternatives}
+                            <ul>
+                                {#each boardState.alternatives as alternative}
+                                    <li>{JSON.stringify(alternative)}</li>
+                                {/each}
+                            </ul>
+                        {/if}
+                    {/each}
+                </ul>
+            <p>Validate Move</p>
+            <input type="text" bind:value={currentBoardPGN}/>
+            <button on:click={validateMove}>Validate move</button>
+            <p>{currentBoardPGN}</p>
+        
+            {#if validationResult !== ''}
+                {#if validationResult === true}
+                    <p>Correct!</p>
+                {:else if validationResult === false}
+                    <p>Incorrect!</p>
+                {:else}
+                    <p>Incorrect! {validationResult}</p>
+                {/if}
+            {/if}
+        {/if}
+    </div>
+    
+    <div class="right-div">
+        blah
+    </div>
+</div>
 
+<style lang="css">
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left-div {
+        flex: 1;
+    }
+
+    .right-div {
+        flex: 1;
+    }
+</style>
 

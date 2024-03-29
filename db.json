@@ -98,24 +98,11 @@
       "id": "SCBi3lr"
     },
     {
-      "title": "",
+      "title": "Test",
       "boardStates": [
-        {
-          "correct": "",
-          "alternatives": [
-            {
-              "pgn": "",
-              "annotation": ""
-            }
-          ]
-        },
         {
           "correct": "e4",
           "alternatives": [
-            {
-              "pgn": "",
-              "annotation": ""
-            },
             {
               "pgn": "d4",
               "annotation": "Test"
@@ -126,24 +113,11 @@
       "id": "HD8iVTd"
     },
     {
-      "title": "",
+      "title": "Test 2",
       "boardStates": [
-        {
-          "correct": "",
-          "alternatives": [
-            {
-              "pgn": "",
-              "annotation": ""
-            }
-          ]
-        },
         {
           "correct": "1. d4",
           "alternatives": [
-            {
-              "pgn": "",
-              "annotation": ""
-            },
             {
               "pgn": "1. e4",
               "annotation": "Try this instead cuck"
